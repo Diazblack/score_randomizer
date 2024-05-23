@@ -12,10 +12,14 @@ defmodule ScoreRandomizer.DataFixtures do
       attrs
       |> Enum.into(%{
         id: Ecto.UUID.generate(),
-        value: 42
+        value: Enum.random(0..100)
       })
       |> ScoreRandomizer.Data.create_score()
 
     score
+  end
+
+  def score_fixtures(number \\ 5) when number > 2 do
+    for _i <- 1..number, do: score_fixture(%{})
   end
 end

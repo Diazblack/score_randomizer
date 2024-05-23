@@ -16,9 +16,6 @@ defmodule ScoreRandomizerWeb.ScoreJSON do
   end
 
   defp data(%Score{} = score) do
-    %{
-      value: score.value,
-      id: score.id
-    }
+    Map.take(score, [:id, :value, :inserted_at, :updated_at])
   end
 end
