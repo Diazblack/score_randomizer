@@ -22,6 +22,24 @@ defmodule ScoreRandomizer.Data do
   end
 
   @doc """
+  Returns the list with 5 random scores.
+
+  ## Examples
+
+      iex> get_random_scores()
+      [%Score{}, ...]
+
+  """
+  def get_random_scores do
+    from(s in Score)
+    |> where([s], s.value >= 50)
+    |> order_by([fragment("RANDOM()")])
+    # find another way this could be slow
+    |> limit(5)
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single score.
 
   Raises `Ecto.NoResultsError` if the Score does not exist.

@@ -40,4 +40,9 @@ defmodule ScoreRandomizerWeb.ScoreController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def rand_scores(conn, _params) do
+    scores = Data.get_random_scores()
+    render(conn, :index, scores: scores)
+  end
 end

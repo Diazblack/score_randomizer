@@ -25,6 +25,8 @@ defmodule ScoreRandomizerWeb.Router do
     pipe_through :api
 
     resources "/scores", ScoreController, only: ~w[index create show update delete]a
+
+    get "/get_scores", ScoreController, :rand_scores
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

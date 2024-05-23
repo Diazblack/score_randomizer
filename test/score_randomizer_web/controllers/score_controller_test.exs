@@ -81,4 +81,25 @@ defmodule ScoreRandomizerWeb.ScoreControllerTest do
     score = score_fixture()
     %{score: score}
   end
+
+  describe "get scores" do
+    test "should return all the scores with values greated than 50", %{conn: conn} do
+      _s1 = score_fixture(%{value: 1})
+      _s2 = score_fixture(%{value: 20})
+      s3 = score_fixture(%{value: 50})
+      s4 = score_fixture(%{value: 75})
+      s5 = score_fixture(%{value: 90})
+
+      %{"data" => data} =
+        conn
+        |> get(~p"/api/v1/get_scores/")
+        |> json_response(200)
+
+      assert length(data) == 3
+
+      Enum.each([s5.id, s4.id, s3.id], fn id ->
+        assert Enum.any?(data, &(&1["id"] == id))
+      end)
+    end
+  end
 end
