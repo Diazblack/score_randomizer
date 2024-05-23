@@ -21,9 +21,11 @@ defmodule ScoreRandomizerWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ScoreRandomizerWeb do
-  #   pipe_through :api
-  # end
+  scope "/api/v1", ScoreRandomizerWeb do
+    pipe_through :api
+
+    resources "/scores", ScoreController, only: ~w[index create show update delete]a
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:score_randomizer, :dev_routes) do
