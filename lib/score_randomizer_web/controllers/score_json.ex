@@ -17,7 +17,6 @@ defmodule ScoreRandomizerWeb.ScoreJSON do
 
   defp data(%Score{} = score) do
     %{
-      id: score.id,
       value: score.value,
       id: score.id
     }

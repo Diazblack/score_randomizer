@@ -15,7 +15,7 @@ defmodule ScoreRandomizerWeb.ScoreController do
     with {:ok, %Score{} = score} <- Data.create_score(score_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/scores/#{score}")
+      |> put_resp_header("location", ~p"/api/v1/scores/#{score}")
       |> render(:show, score: score)
     end
   end

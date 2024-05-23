@@ -12,7 +12,8 @@ defmodule ScoreRandomizer.Data.Score do
   @doc false
   def changeset(score, attrs) do
     score
-    |> cast(attrs, [:value, :id])
-    |> validate_required([:value, :id])
+    |> cast(attrs, [:value])
+    |> validate_required([:value])
+    |> check_constraint(:value, name: :value_range_constraint)
   end
 end
