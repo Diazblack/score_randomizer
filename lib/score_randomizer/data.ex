@@ -78,10 +78,10 @@ defmodule ScoreRandomizer.Data do
     Creates scores in Bulk
 
     ## Exmaples
-    iex> create_scores(2)
+    iex> create_scores_in_bulk(1_000)
     {:ok, [%Score{}, ...]}
 
-    iex> create_scores_in_bulk(2)
+    iex> create_scores_in_bulk(1_000)
     {:error, any()}
   """
 
@@ -91,6 +91,16 @@ defmodule ScoreRandomizer.Data do
     |> Enum.map(&create_scores/1)
   end
 
+  @doc """
+    Creates multiple scores by passing a list of integer indexes
+
+    ## Exmaples
+    iex> create_scores(0..10)
+    {:ok, [%Score{}, ...]}
+
+    iex> create_scores_in_bulk(0..10)
+    {:error, any()}
+  """
   def create_scores(index_list) do
     Enum.reduce(index_list, Multi.new(), fn index, multi ->
       Multi.insert(
