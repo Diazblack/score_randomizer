@@ -33,6 +33,20 @@ defmodule ScoreRandomizer.DataTest do
       assert {:error, %Ecto.Changeset{}} = Data.create_score(%{value: 1002})
     end
 
+    test "create_scores_in_bulk/1 create multiple scores in bulk" do
+      [ok: map] = Data.create_scores_in_bulk(5)
+      assert Map.keys(map) == [{:score, 1}, {:score, 2}, {:score, 3}, {:score, 4}, {:score, 5}]
+    end
+
+    test "create_scores/1 create muliple scores when a list of index is passed" do
+      {:ok, result} = Data.create_scores(1..5)
+
+      Enum.map(result, fn {_key, score} ->
+        assert {:ok, _uuid} = Ecto.UUID.cast(score.id)
+        refute is_nil(score.value)
+      end)
+    end
+
     test "update_score/2 with valid data updates the score" do
       score = score_fixture()
       update_attrs = %{value: 43}

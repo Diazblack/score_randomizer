@@ -4,6 +4,7 @@ defmodule ScoreRandomizer.Data do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Multi
   alias ScoreRandomizer.Repo
 
   alias ScoreRandomizer.Data.Score
@@ -71,6 +72,44 @@ defmodule ScoreRandomizer.Data do
     %Score{}
     |> Score.changeset(attrs)
     |> Repo.insert()
+  end
+
+  @doc """
+    Creates scores in Bulk
+
+    ## Exmaples
+    iex> create_scores_in_bulk(1_000)
+    {:ok, [%Score{}, ...]}
+
+    iex> create_scores_in_bulk(1_000)
+    {:error, any()}
+  """
+
+  def create_scores_in_bulk(number \\ 10) do
+    1..number
+    |> Enum.chunk_every(15_000)
+    |> Enum.map(&create_scores/1)
+  end
+
+  @doc """
+    Creates multiple scores by passing a list of integer indexes
+
+    ## Exmaples
+    iex> create_scores(0..10)
+    {:ok, [%Score{}, ...]}
+
+    iex> create_scores_in_bulk(0..10)
+    {:error, any()}
+  """
+  def create_scores(index_list) do
+    Enum.reduce(index_list, Multi.new(), fn index, multi ->
+      Multi.insert(
+        multi,
+        {:score, index},
+        Score.changeset(%Score{}, %{value: Enum.random(0..100)})
+      )
+    end)
+    |> Repo.transaction()
   end
 
   @doc """
