@@ -4,6 +4,7 @@ defmodule ScoreRandomizer.Data do
   """
 
   import Ecto.Query, warn: false
+
   alias Ecto.Multi
   alias ScoreRandomizer.Repo
 
@@ -75,7 +76,7 @@ defmodule ScoreRandomizer.Data do
   end
 
   @doc """
-    Creates scores in Bulk
+    Create all the scores values in Bulk
 
     ## Exmaples
     iex> create_scores_in_bulk(1_000)
@@ -98,7 +99,7 @@ defmodule ScoreRandomizer.Data do
     iex> create_scores(0..10)
     {:ok, [%Score{}, ...]}
 
-    iex> create_scores_in_bulk(0..10)
+    iex> create_scores(0..10)
     {:error, any()}
   """
   def create_scores(index_list) do
@@ -128,6 +129,24 @@ defmodule ScoreRandomizer.Data do
     score
     |> Score.changeset(attrs)
     |> Repo.update()
+  end
+
+  @doc """
+  Updates a score.
+
+  ## Examples
+
+      iex> update_scores_values(score, %{field: new_value})
+      {:ok, %Score{}}
+
+      iex> update_scores_values(score, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_score_values() do
+    Score
+    |> update(set: [value: fragment("floor(random()*100)")])
+    |> Repo.update_all([])
   end
 
   @doc """
