@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.PopulateDatabase do
   use Mix.Task
 
-  @requirement ["app.start"]
+  @requirements ["app.start"]
 
   alias ScoreRandomizer.Data
   alias ScoreRandomizer.Data.Score
@@ -9,24 +9,16 @@ defmodule Mix.Tasks.PopulateDatabase do
 
   @impl Mix.Task
   def run(_args) do
+    entries = Repo.aggregate(Score, :count, :id)
 
-
-    entries_number = Repo.aggregate(Score, :count, :id)
-
-    if entries_number < 1_000_000 do
+    if entries < 100 do
       Mix.shell().info("Seeding the database")
+      result = Data.create_scores_in_bulk(1_000_000)
 
-      now = DateTime.utc_now()
-
-      %{value: 0, insert_at: now, updated_at: now}
-      |> list.duplicate(1_000_000)
-      |> Enum.chunk_every(15_000)
-      |> Enum.each(&Repo.insert_all(Score, &1))
-
+      Mix.shell().info("#{inspect(result, pretty: true)}")
       Mix.shell().info("Seeding completed")
     else
       Mix.shell().info("Database Already Seeded")
     end
-
   end
 end
