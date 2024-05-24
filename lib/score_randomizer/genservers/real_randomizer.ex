@@ -19,10 +19,10 @@ defmodule ScoreRandomizer.Genservers.RealRandomizer do
 
   @impl true
   def handle_info(:random, state) do
-    IO.inspect("Updating Score Tables at: #{DateTime.utc_now()}")
-
+    IO.puts("Updating Scores Tables at: #{DateTime.utc_now()}")
     {update_number, _any} = Data.update_score_values()
-    IO.inspect("#{update_number} Scores updated at: #{DateTime.utc_now()}")
+    IO.puts("#{update_number} Scores updated at: #{DateTime.utc_now()}")
+    
     Process.send_after(self(), :random, @interval)
     {:noreply, state}
   end

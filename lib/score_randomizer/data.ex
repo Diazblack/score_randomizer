@@ -136,10 +136,10 @@ defmodule ScoreRandomizer.Data do
 
   ## Examples
 
-      iex> update_scores_values(score, %{field: new_value})
+      iex> update_score_values()
       {:ok, %Score{}}
 
-      iex> update_scores_values(score, %{field: bad_value})
+      iex> update_score_values()
       {:error, %Ecto.Changeset{}}
 
   """
