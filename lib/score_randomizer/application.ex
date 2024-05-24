@@ -17,7 +17,8 @@ defmodule ScoreRandomizer.Application do
       # Start a worker by calling: ScoreRandomizer.Worker.start_link(arg)
       # {ScoreRandomizer.Worker, arg},
       # Start to serve requests, typically the last entry
-      ScoreRandomizerWeb.Endpoint
+      ScoreRandomizerWeb.Endpoint,
+      ScoreRandomizer.Genservers.RealRandomizer
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
