@@ -1,17 +1,23 @@
 # ScoreRandomizer
-This repository contains an Elixir/Phoenix app that for generating great amont of randomized scores
+This repository contains an Elixir/Phoenix app that generates great amount of randomized scores
 
+# Installation 
+Follow the instructions to install Elixir 1.16-opt-26 [Elixir Lang Org Page](https://elixir-lang.org/install.html) 
+If you have a different version of Elixir installed, I recommend using asdf for version management. 
+For more information visit [asdf homepage](https://asdf-vm.com/guide/getting-started.html)
+
+# Run the app
 To start your Phoenix server:
 
   * Run `mix setup` to install and setup dependencies
   * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
-
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+  * To connect with the API, is necessary to make HTTP request to your local endpoint http://localhost:4000/api/v1/ 
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 # Description
 The idea behind this project is to create a program that can track randomly generated scores in a large dataset table, showcasing the full extent of Phoenix capabilities.
+
 ## Implementation
 ### Create Scores-**Endpoint to Create a New Score**  -Fields:
     -**Value**: Integer [1..100]
@@ -35,7 +41,6 @@ The idea behind this project is to create a program that can track randomly gene
   - Update all 1 million records every 10 seconds.
   - Ensure all previous functionalities continue to work as expected.
   - Gradually reduce the update interval to 1 second without causing the app to crash.
-
 
 ## Learn more
 
